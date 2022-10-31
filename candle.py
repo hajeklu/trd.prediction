@@ -1,7 +1,8 @@
 from enum import Enum
 import time
 
-#'open', 'high', 'low', 'close', 'avg_price', 'ohlc_price', 'oc_diff'
+
+# 'open', 'high', 'low', 'close', 'avg_price', 'ohlc_price', 'oc_diff'
 class Candle:
     def __init__(self, date, open, high, low, close, avg_price, ohlc_price, oc_diff):
         self.date = date
@@ -30,4 +31,5 @@ class CandleTime(Enum):
 
 def arrayToCandle(array):
     print(array)
-    return Candle(time.time(), array[0], array[2], array[3], array[4], array[5], array[6], array[7])
+    return Candle(time.time(), float(array[0]), float(array[1]), float(array[2]), float(array[3]), float(array[4]),
+                  float(array[5]), float(array[6]))

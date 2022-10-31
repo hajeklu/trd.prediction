@@ -63,7 +63,7 @@ def trainModel(trainCandles, prediction_minutes=60, model_name='lstm_1m_10_model
         y_train,
         validation_data=(x_test, y_test),
         epochs=10,
-        batch_size=32)
+        batch_size=16)
 
     return model
 
