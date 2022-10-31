@@ -30,6 +30,5 @@ class CandleTime(Enum):
 
 
 def arrayToCandle(array):
-    print(array)
     return Candle(time.time(), float(array[0]), float(array[1]), float(array[2]), float(array[3]), float(array[4]),
                   float(array[5]), float(array[6]))

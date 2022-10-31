@@ -8,13 +8,9 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout,  LSTM
 
 
-
 def normalize_candles(candles, scaler):
-    print("Scaling..")
     candles[['open', 'high', 'low', 'close', 'avg_price', 'ohlc_price', 'oc_diff']] = scaler.fit_transform(
         candles[['open', 'high', 'low', 'close', 'avg_price', 'ohlc_price', 'oc_diff']])
-    print(scaler.data_min_)
-    print(scaler.data_max_)
     return candles
 
 
@@ -46,7 +42,6 @@ def trainModel(trainCandles, prediction_minutes=60, model_name='lstm_1m_10_model
     y_train = np.array(y_toSplit[0: sizeOf70percentage])
 
     model = None
-    print("Creatng model..")
     model = Sequential()
     model.add(LSTM(units=50, return_sequences=True,
               input_shape=(x_train.shape[1], x_train.shape[2])))
