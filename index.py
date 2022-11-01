@@ -10,16 +10,18 @@ for http_code in HTTP_CODES:
         response.default_content_type = "application/json"
         return json.dumps(dict(error=error.status_code, message=error.status_line))
 
+
 @get('/')
 def getIndex():
     return "Success"
+
 
 @post('/predict')
 def predict():
     candles = json.loads(request.body.read())
     response.content_type = 'application/json; charset=UTF8'
-    candle = arrayToCandle(main(candles))
-    jCandle = json.dumps(candle.__dict__)
+    candleDirection = main(candles)
+    jCandle = json.dumps(candleDirection)
     return jCandle
 
 
