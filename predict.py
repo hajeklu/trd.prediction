@@ -16,9 +16,9 @@ def normalize_candles(candles, scaler):
 
 def redOrGreen(open, close):
     if (open < close):
-        return 0.99  # GREEN
+        return 1  # GREEN
     if (open >= close):
-        return 0.01  # RED
+        return 0  # RED
 
 
 def redOrGreenFromNumber(number):
@@ -106,5 +106,5 @@ def main(candlesArray):
     predictDirection = predictFromModel(
         candles.tail(prediction_unit), model, scaler)
 
-    color = redOrGreenFromNumber(predictDirection)
+    color = redOrGreenFromNumber(predictDirection[0])
     return [color, str(predictDirection[0])]
