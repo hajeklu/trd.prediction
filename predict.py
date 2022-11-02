@@ -16,15 +16,16 @@ def normalize_candles(candles, scaler):
 
 def redOrGreen(open, close):
     if (open < close):
-        return 1  # GREEN
+        return 0.99  # GREEN
     if (open >= close):
-        return 0  # RED
+        return 0.01  # RED
 
 
 def redOrGreenFromNumber(number):
-    if (number > 0.8):
+    percentage = round(number * 100)
+    if (percentage >= 52):
         return "GREEN"
-    if (number <= 0.3):
+    if (percentage <= 48):
         return "RED"
     return "NEUTRAL"
 
@@ -57,7 +58,7 @@ def trainModel(trainCandles, prediction_minutes=60, model_name='lstm_1m_10_model
 
     model = None
     model = Sequential()
-    model.add(LSTM(units=10, return_sequences=True,
+    model.add(LSTM(units=50, return_sequences=True,
               input_shape=(x_train.shape[1], x_train.shape[2])))
     model.add(Dropout(0.2))
     model.add(LSTM(units=50, return_sequences=True))
@@ -71,8 +72,8 @@ def trainModel(trainCandles, prediction_minutes=60, model_name='lstm_1m_10_model
         x_train,
         y_train,
         validation_data=(x_test, y_test),
-        epochs=5,
-        batch_size=16)
+        epochs=10,
+        batch_size=32)
 
     return model
 
@@ -100,7 +101,7 @@ def main(candlesArray):
     normalized_all_candles = normalize_candles(candles, scaler)
     timestamp = datetime.now()
     MODEL_NAME = 'model-' + str(timestamp)
-    prediction_unit = 40
+    prediction_unit = 12
     model = trainModel(normalized_all_candles, prediction_unit, MODEL_NAME)
     predictDirection = predictFromModel(
         candles.tail(prediction_unit), model, scaler)
