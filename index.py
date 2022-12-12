@@ -1,5 +1,5 @@
 from bottle import run, get, post, default_app, HTTP_CODES, request, response
-from predict import main
+from classify import call
 from candle import arrayToCandle
 import json
 app = default_app()
@@ -18,11 +18,11 @@ def getIndex():
 
 @post('/predict')
 def predict():
-    candles = json.loads(request.body.read())
+    candles = request.body.read()
     response.content_type = 'application/json; charset=UTF8'
-    candleDirection = main(candles)
-    jCandle = json.dumps(candleDirection)
-    return jCandle
+    candleDirection = call(json.loads(candles))
+    direction = json.dumps({'direction': candleDirection.tolist()})
+    return direction
 
 
 run(port=8080)

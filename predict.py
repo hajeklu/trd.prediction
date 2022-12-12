@@ -18,14 +18,14 @@ def redOrGreen(open, close):
     if (open < close):
         return 1  # GREEN
     if (open >= close):
-        return 0  # RED
+        return -1  # RED
 
 
 def redOrGreenFromNumber(number):
     percentage = round(number * 100)
-    if (percentage >= 52):
+    if (percentage >= 20):
         return "GREEN"
-    if (percentage <= 48):
+    if (percentage <= -20):
         return "RED"
     return "NEUTRAL"
 
@@ -67,7 +67,7 @@ def trainModel(trainCandles, prediction_minutes=60, model_name='lstm_1m_10_model
     model.add(Dropout(0.2))
     model.add(Dense(units=1))
     model.compile(optimizer='Adam', loss='mean_squared_error',
-                  metrics=['accuracy'])
+                  metrics=['mse'])
     model.fit(
         x_train,
         y_train,
