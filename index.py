@@ -21,7 +21,7 @@ def predict():
     candles = request.body.read()
     response.content_type = 'application/json; charset=UTF8'
     candleDirection = call(json.loads(candles))
-    direction = json.dumps({'direction': candleDirection.tolist()})
+    direction = json.dumps({'direction': candleDirection.tolist()[0][0]})
     return direction
 
 
